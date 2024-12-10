@@ -21,9 +21,18 @@ pipeline {
             }
             stage('Test') {
                 steps{
-                    echo 'Test stage'
+                    sh '''
+                    Test -f build/index.html
+                    npm test
+                    '''
                 }
             }
+        }
+    }
+
+    post{
+        always {
+            junit 'test-result/junit.xml'
         }
     }
 }
